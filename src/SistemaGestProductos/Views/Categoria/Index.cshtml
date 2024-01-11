@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Categoria>
+@{
+    ViewBag.Subtitulo = "Categorias";
+}
+<div class="row">
+    <div class="col col-12">
+        <header class="row align-items-center">
+            <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom">
+                <h2 class="text-secondary">Todas as @ViewBag.Subtitulo</h2>
+                <div class="col-auto d-flex">
+                    <a type="button" asp-action="CreateOuEdit" class="btn btn-primary ">
+                        <i class="icofont-plus-circle me-2 fs-6"></i>Nova Categoria
+                    </a>
+                </div>
+            </div>
+        </header>
+        <hr />
+    </div>
+</div>
+
+<partial name="_Mensagem" />
+
+<div class="row">
+    <div class="col col-12">
+
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-striped table-hover tabela-categorias">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>CATEGORIA</th>
+                            <th>DATA DO REGISTO</th>
+                            <th>DATA DA ÚLTIMA ALTERAÇÃO</th>
+                            <th>ACÇÕES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var Categoria in Model)
+                        {
+                            <tr>
+                                <th>@Categoria.Nome.ToUpper()</th>
+                                <th>@Categoria.DataRegisto</th>
+                                 <th>@Categoria.DataUltimaAlteracao</th>
+                                <th>
+                                    <a asp-action="CreateOuEdit" asp-route-id="@Categoria.Id" class="btn btn-outline-warning badge">Alterar</a>
+                                    <a asp-action="Delete" asp-route-id="@Categoria.Id" class="btn btn-outline-danger badge">Excluir</a>
+                                </th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h4 class="text-danger">Sem registos de momento.</h4>
+                <h5 class="text-dark text-md-end">Pode efectuar um registo em <span class="text-secondary">nova categoria</span>.</h5>
+            } 
+    </div>
+
+</div>

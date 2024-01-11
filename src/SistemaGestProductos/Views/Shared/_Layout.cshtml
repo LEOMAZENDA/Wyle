@@ -1,0 +1,247 @@
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.addTagHelpers
+@{
+    var controllerActual = ViewContext.RouteData.Values["controller"].ToString();
+    var classeMenuPrincipal = controllerActual == "Principal" ? "active" : "";
+    var classeMenuProductos = controllerActual == "Producto" ? "active" : "";
+    var classeMenuCategorias = controllerActual == "Categoria" ? "active" : "";
+    var classeMenuCliente = controllerActual == "Cliente" ? "active" : "";
+}
+
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Wyle: @ViewBag.Subtitulo</title>
+    <link rel="icon" href="~/Tamp/favicon.ico" type="image/x-icon"> <!-- Favicon-->
+    <!-- plugin css file  -->
+    <link rel="stylesheet" href="~/Tamp/assets/plugin/fullcalendar/main.min.css">
+    <!-- project css file  -->
+    <link rel="stylesheet" href="~/Tamp/assets/css/my-task.style.min.css">
+    <link href="~/css/estilos.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="mytask-layout" class="theme-indigo">
+
+        <!-- sidebar -->
+        <div class="sidebar px-4 py-4 py-md-5 me-0">
+            <div class="d-flex flex-column h-100">
+                <a asp-action="Index" asp-controller="Principal" class="mb-0 brand-icon">
+                    <span class="logo-icon">
+                        <svg width="35" height="35" fill="currentColor" class="bi bi-clipboard-check" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                            <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                            <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                        </svg>
+                    </span>
+                    <span class="logo-text">Wyle Comerçio</span>
+                </a>
+                <!-- Menu: menu collepce btn -->
+                <button type="button" class="btn btn-link sidebar-mini-btn text-light">
+                    <span class="ms-2"><i class="icofont-bubble-right"></i></span>
+                </button>
+
+                <!-- Menu: main ul -->
+                <ul class="menu-list flex-grow-1 mt-3">
+                    <li class="collapsed">
+                        <a class="m-link active" asp-controller="Principal" asp-action="Index">
+                            <i class="icofont-home fs-5"></i> <span>Principal</span>
+                        </a>
+                    </li>
+
+                    <li class="collapsed">
+                        <a class="m-link" data-bs-toggle="collapse" data-bs-target="#dashboard-Components" href="#">
+                            <i class="icofont-sale-discount fs-5"></i> <span>Vendas</span> <span class="arrow icofont-dotted-down ms-auto text-end fs-5"></span>
+                        </a>
+                        <!-- Menu: Sub menu ul -->
+                        <ul class="sub-menu collapse" id="dashboard-Components">
+                            @*<li><a class="ms-link" href="index.html"> <span>Efectuar Venda</span></a></li>
+                            <li><a class="ms-link" href="project-dashboard.html"> <span>Efectuar Proforma</span></a></li>
+                            <li><a class="ms-link" href="index.html"> <span>Consultar Venda</span></a></li>
+                            <li><a class="ms-link" href="project-dashboard.html"> <span>Consultar Proforma</span></a></li>
+                            <li><a class="ms-link" href="index.html"> <span>Alterar Venda</span></a></li>
+                            <li><a class="ms-link" href="project-dashboard.html"> <span>Anular Venda</span></a></li>
+                            <li><a class="ms-link" href="project-dashboard.html"> <span>Anular Proforma</span></a></li>*@
+
+                            <li><a class="ms-link @classeMenuPrincipal" asp-controller="Principal" asp-action="Index"><span>Principal</span></a></li>
+                            <li><a class="ms-link @classeMenuCategorias" asp-controller="Categoria" asp-action="Index"><span>Categoria</span></a></li>
+                            <li><a class="ms-link @classeMenuProductos" asp-controller="Producto" asp-action="Index"><span>Producto</span></a></li>
+                            <li><a class="ms-link @classeMenuCliente" asp-controller="Cliente" asp-action="Index"><span>Cliente</span></a></li>
+
+                        </ul>
+                    </li>
+
+                    <li class="collapsed">
+                        <a class="m-link" data-bs-toggle="collapse" data-bs-target="#project-Components" href="#">
+                            <i class="icofont-briefcase"></i><span>Compras</span> <span class="arrow icofont-dotted-down ms-auto text-end fs-5"></span>
+                        </a>
+                        <!-- Menu: Sub menu ul -->
+                        <ul class="sub-menu collapse" id="project-Components">
+                            <li><a class="ms-link" href="projects.html"><span>Projects</span></a></li>
+                            <li><a class="ms-link" href="task.html"><span>Tasks</span></a></li>
+                            <li><a class="ms-link" href="timesheet.html"><span>Timesheet</span></a></li>
+                            <li><a class="ms-link" href="team-leader.html"><span>Leaders</span></a></li>
+                        </ul>
+                    </li>
+
+                    <li class="collapsed">
+                        <a class="m-link" data-bs-toggle="collapse" data-bs-target="#tikit-Components" href="#">
+                            <i class="icofont-ticket"></i> <span>Productos</span> <span class="arrow icofont-dotted-down ms-auto text-end fs-5"></span>
+                        </a>
+                        <!-- Menu: Sub menu ul -->
+                        <ul class="sub-menu collapse" id="tikit-Components">
+                            <li><a class="ms-link" href="tickets.html"> <span>Tickets View</span></a></li>
+                            <li><a class="ms-link" href="ticket-detail.html"> <span>Ticket Detail</span></a></li>
+                        </ul>
+                    </li>
+
+                    <li class="collapsed">
+                        <a class="m-link" data-bs-toggle="collapse" data-bs-target="#client-Components" href="#">
+                            <i class="icofont-user-male"></i><span>Clientes</span> <span class="arrow icofont-dotted-down ms-auto text-end fs-5"></span>
+                        </a>
+                        <!-- Menu: Sub menu ul -->
+                        <ul class="sub-menu collapse" id="client-Components">
+                            <li><a class="ms-link" href="ourclients.html"> <span>Clients</span></a></li>
+                            <li><a class="ms-link" href="profile.html"> <span>Client Profile</span></a></li>
+                        </ul>
+                    </li>
+
+                    <li class="collapsed">
+                        <a class="m-link" data-bs-toggle="collapse" data-bs-target="#emp-Components" href="#">
+                            <i class="icofont-users-alt-5"></i> <span>Fornecedores</span> <span class="arrow icofont-dotted-down ms-auto text-end fs-5"></span>
+                        </a>
+                        <!-- Menu: Sub menu ul -->
+                        <ul class="sub-menu collapse" id="emp-Components">
+                            <li><a class="ms-link" href="members.html"> <span>Members</span></a></li>
+                            <li><a class="ms-link" href="employee-profile.html"> <span>Members Profile</span></a></li>
+                            <li><a class="ms-link" href="holidays.html"> <span>Holidays</span></a></li>
+                            <li><a class="ms-link" href="attendance-employees.html"> <span>Attendance Employees</span></a></li>
+                            <li><a class="ms-link" href="attendance.html"> <span>Attendance</span></a></li>
+                            <li><a class="ms-link" href="leave-request.html"> <span>Leave Request</span></a></li>
+                            <li><a class="ms-link" href="department.html"> <span>Department</span></a></li>
+                        </ul>
+                    </li>
+
+                    <li class="collapsed">
+                        <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-Componentsone" href="#">
+                            <i class="icofont-user-alt-5"></i> <span>Usuários</span> <span class="arrow icofont-dotted-down ms-auto text-end fs-5"></span>
+                        </a>
+                        <!-- Menu: Sub menu ul -->
+                        <ul class="sub-menu collapse" id="menu-Componentsone">
+                            <li><a class="ms-link" href="invoices.html"><span>Invoices</span> </a></li>
+                            <li><a class="ms-link" href="payments.html"><span>Payments</span> </a></li>
+                            <li><a class="ms-link" href="expenses.html"><span>Expenses</span> </a></li>
+                        </ul>
+                    </li>
+
+                    <li class="collapsed">
+                        <a class="m-link" data-bs-toggle="collapse" data-bs-target="#payroll-Components" href="#">
+                            <i class="icofont-users-alt-5"></i> <span>Funcionários</span> <span class="arrow icofont-dotted-down ms-auto text-end fs-5"></span>
+                        </a>
+                        <!-- Menu: Sub menu ul -->
+                        <ul class="sub-menu collapse" id="payroll-Components">
+                            <li><a class="ms-link" href="salaryslip.html"><span>Employee Salary</span> </a></li>
+
+                        </ul>
+                    </li>
+
+                    <li class="collapsed">
+                        <a class="m-link" data-bs-toggle="collapse" data-bs-target="#app-Components" href="#">
+                            <i class="icofont-money"></i> <span>Caixa</span> <span class="arrow icofont-dotted-down ms-auto text-end fs-5"></span>
+                        </a>
+                        <!-- Menu: Sub menu ul -->
+                        <ul class="sub-menu collapse" id="app-Components">
+                            <li><a class="ms-link" href="calendar.html"> <span>Calander</span></a></li>
+                            <li><a class="ms-link" href="chat.html"><span>Chat App</span></a></li>
+                        </ul>
+                    </li>
+
+                    <li class="collapsed">
+                        <a class="m-link" data-bs-toggle="collapse" data-bs-target="#extra-Components" href="#">
+                            <i class="icofont-ui-settings"></i> <span>Configurações</span> <span class="arrow icofont-dotted-down ms-auto text-end fs-5"></span>
+                        </a>
+                        <!-- Menu: Sub menu ul -->
+                        <ul class="sub-menu collapse" id="extra-Components">
+                            <li><a class="ms-link" href="charts.html"> <span>Apex Charts</span></a></li>
+                            <li><a class="ms-link" href="forms.html"><span>Forms Example</span></a></li>
+                            <li><a class="ms-link" href="table.html"> <span>Table Example</span></a></li>
+                            <li><a class="ms-link" href="review.html"><span>Reviews Page</span></a></li>
+                            <li><a class="ms-link" href="icon.html"><span>Icons</span></a></li>
+                            <li><a class="ms-link" href="contact.html"><span>Contact</span></a></li>
+                            <li><a class="ms-link" href="widgets.html"><span>Widgets</span></a></li>
+                        </ul>
+                    </li>
+                    <li><a class="m-link" href="ui-elements/ui-alerts.html"><i class="icofont-technorati"></i> <span>Suporte técnico</span></a></li>
+                </ul>
+
+                <!-- Theme: Switch Theme -->
+                <ul class="list-unstyled mb-0">
+                    <li class="d-flex align-items-center justify-content-center">
+                        <div class="form-check form-switch theme-switch">
+                            <input class="form-check-input" type="checkbox" id="theme-switch">
+                            <label class="form-check-label" for="theme-switch">Modo Escuro!</label>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-center justify-content-center">
+                        <div class="form-check form-switch theme-rtl">
+                            <input class="form-check-input" type="checkbox" id="theme-rtl">
+                            <label class="form-check-label" for="theme-rtl">Mover menú!</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- main body area -->
+        <div class="main px-lg-4 px-md-4">
+            <div class="header">
+                <nav class="navbar py-4">
+                    <div class="container-xxl">
+
+                        <!-- header rightbar icon -->
+                        <div class="h-right d-flex align-items-center mr-5 mr-lg-0 order-1">
+                            <div class="d-flex">
+                                <a class="nav-link text-primary collapsed" href="help.html" title="Get Help">
+                                    <i class="icofont-info-square fs-5"></i>
+                                </a>
+                            </div>
+
+                        </div>
+
+                        <!-- menu toggler -->
+                        <button class="navbar-toggler p-0 border-0 menu-toggle order-3" type="button" data-bs-toggle="collapse" data-bs-target="#mainHeader">
+                            <span class="fa fa-bars"></span>
+                        </button>
+
+                        <div class="dropdown user-profile ml-2 ml-sm-3 d-flex align-items-center zindex-popover">
+                            <div class="u-info me-2">
+                                <p class="mb-0 text-end line-height-sm "><span class="font-weight-bold">Leonildo Mazenda</span></p>
+                                <small>Administrador</small>
+                            </div>
+                            <a class="nav-link dropdown-toggle pulse p-0" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static">
+                                <img class="avatar lg rounded-circle img-thumbnail" src="~/Tamp/assets/images/profile_av.png" alt="profile">
+                            </a>
+                        </div>
+
+                    </div>
+                </nav>
+                <hr />
+                @RenderBody()
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Jquery Core Js -->
+    <script src="~/Tamp/assets/bundles/libscripts.bundle.js"></script>
+    <!-- Plugin Js-->
+    <script src="~/Tamp/assets/plugin/fullcalendar/main.min.js"></script>
+    <!-- Jquery Page Js -->
+    <script src="~/Tamp/js/template.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

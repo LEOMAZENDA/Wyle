@@ -1,0 +1,73 @@
+﻿@model Models.Entidades.Endereco
+
+@{
+    var cliente = ViewBag.Cliente as Cliente;
+    if (Context.Request.RouteValues.ContainsKey("eid"))
+        ViewBag.Subtitulo = ($"Alterando Endereço de <b>{cliente.Nome}</b>");
+    else
+        ViewBag.Subtitulo = ($"A Registar Endereço de <b>{cliente.Nome}</b>");
+}
+
+<h1 class=" text-secondary">@Html.Raw(ViewBag.Subtitulo)</h1>
+<hr />
+
+<form asp-action="CreateOuEdit" class="row">
+    <input type="hidden" asp-for="@Model.IdEndereco" />
+    <input type="hidden" value="@cliente.Id" name="idCliente" id="idCliente"/>
+
+    <div class=" col col-sm-6 col-lg-6 p-2">
+        <label class="text-black-50" asp-for="@Model.Provincia"></label>
+        <input asp-for="@Model.Provincia" class="form-control" autofocus" />
+        <span asp-validation-for="@Model.Provincia" class="text-danger"></span>
+    </div>
+
+    <div class=" col col-sm-6 col-lg-6 p-2">
+        <label class="text-black-50" asp-for="@Model.Municipio"></label>
+        <input asp-for="@Model.Municipio" class="form-control" />
+        <span asp-validation-for="@Model.Municipio" class="text-danger"></span>
+    </div>
+    <div class="w-100"></div>
+
+    <div class=" col col-sm-8 col-lg-6 p-2">
+        <label class="text-black-50" asp-for="@Model.Bairro"></label>
+        <input asp-for="@Model.Bairro" class="form-control" />
+        <span asp-validation-for="@Model.Bairro" class="text-danger"></span>
+    </div>
+
+    <div class=" col col-sm-8 col-lg-6 p-2">
+        <label class="text-black-50" asp-for="@Model.Rua"></label>
+        <input asp-for="@Model.Rua" class="form-control" />
+        <span asp-validation-for="@Model.Rua" class="text-danger"></span>
+    </div>
+    <div class="w-100"></div>
+
+    <div class=" col col-sm-2 col-lg-4 w-25 p-2">
+        <label class="text-black-50" asp-for="@Model.CasaNº">Casa nº</label>
+        <input asp-for="@Model.CasaNº" class="form-control" />
+        <span asp-validation-for="@Model.CasaNº" class="text-danger"></span>
+    </div>
+    <div class="w-100"></div>
+
+    <div class="w-100">
+        <label class="text-black-50" asp-for="@Model.Referencia">Referência</label>
+        <input asp-for="@Model.Referencia" class="form-control" />
+        <span asp-validation-for="@Model.Referencia" class="text-danger"></span>
+    </div>
+
+    <div class="w-100">
+        <div class="form-check col-12 p-3">
+            <input asp-for="@Model.Selecionado" type="checkbox" />
+            <label asp-for="@Model.Selecionado">Definr como o endereço padrão</label>
+            <span asp-validation-for="@Model.Selecionado" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <button class="btn btn-success" type="submit" asp-action="CreateOuEdit">Guardar</button>
+        <a asp-action="Index" asp-route-cid="@cliente.Id" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+
+@section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

@@ -1,0 +1,20 @@
+﻿@model Models.Entidades.Endereco
+
+@{
+    ViewBag.Subtitulo = "Eliminando endereço";
+    var cliente =  ViewBag.Cliente as Cliente;
+}
+
+<h1 class="text-secondary">@ViewBag.Subtitulo de @cliente.Nome</h1>
+<h4>Deseja realmente eliminar do sistema o endereço: <span class="text-danger">"@Model.EnderecoComplecto"</span>?</h4>
+<hr />
+
+    <form asp-action="Delete" class="w-25">
+        <input type="hidden" asp-for="@Model.IdEndereco" />
+        <input type="hidden" asp-for="@cliente.Id" name="IdCliente"/>
+        <div class="mt-3">            
+            <button class="btn btn-danger" type="submit">Sim</button>
+            <a asp-action="Index" asp-route-cid="@cliente.Id" class="btn btn-secondary">Não</a>
+        </div>
+    </form>
+

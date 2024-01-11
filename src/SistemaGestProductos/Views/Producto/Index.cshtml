@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Producto>
+@{
+    ViewBag.Subtitulo = "Productos";
+}
+
+<header class="d-flex justify-content-between align-items-center">
+    <div>
+        <h1 class="text-secondary">Todas os @ViewBag.Subtitulo</h1>
+    </div>
+    <div>
+        <a asp-action="CreateOuEdit" class="text-decoration-none btn btn-primary">Adicionar Producto</a>
+    </div>
+</header>
+<hr />
+
+<partial name="_Mensagem" />
+
+@if (Model.Count() > 0)
+{
+    <table class="table table-striped table-hover tabela-productos">
+        <thead class="table-dark">
+            <tr>
+                <th>PRODUCTO</th>
+                <th>CATEGORIA</th>
+                <th>QUANTIDADE </th>
+                <th>PREÇO</th>
+                <th>OBSERVAÇÃO</th>
+                <th>DATA DO REGISTO</th>
+                <th>ACÇÕES</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var producto in Model)
+            {
+                <tr>
+                    <th>@producto.Nome.ToUpper()</th>
+                    <th>@producto.Categoria.Nome.ToUpper()</th>
+                    <th>@producto.Estoque.ToString("D2")</th>
+                    <th>@producto.Preco.ToString("C")</th>
+                    <th>@producto.Obs</th>
+                    <th>@producto.DataRegisto</th>
+                    <th>
+                        <a asp-action="CreateOuEdit" asp-route-id="@producto.Id" class="btn btn-outline-warning badge">Alterar</a>
+                        <a asp-action="Delete" asp-route-id="@producto.Id" class="btn btn-outline-danger badge">Excluir</a>
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h4 class="text-danger">Sem registos de momento.</h4>
+    <h5 class="text-dark text-md-end">Pode efectuar um registo em <span class="text-secondary">"Adicionar Producto"</span>.</h5>
+}

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Venda>
+@{
+    var cliente = ViewBag.Cliente as Cliente;
+    ViewBag.Subtitulo = $"Facturas de <b>{cliente.Nome}</b>";
+}
+
+<header class="d-flex justify-content-between align-items-center">
+    <div>
+        <h1 class="text-secondary">@Html.Raw(ViewBag.Subtitulo)</h1>
+    </div>
+    <div>
+        <a asp-action="CreateOuEdit" asp-route-cid="@cliente.Id" class="btn btn-outline-primary">Nova venda</a>
+    </div>
+</header>
+<hr />
+
+<partial name="_Mensagem" />
+
+@if (Model.Count() > 0)
+{
+    <table class="table table-striped table-hover tabela-categorias">
+        <thead class="table-dark">
+            <tr>
+                <th>NÚMERO</th>
+                <th>DATA/HORA VENDA</th>
+                <th>VALAOR TOTAL</th>
+                <th>DATA/HORA ENTREGA </th>
+                <th>ACÇÕES</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Venda in Model)
+            {
+                <tr>
+                    <td>@Venda.IdVenda.ToString("D4")</td>
+                    <td>@(Venda.DataVenda.HasValue ? Venda.DataVenda : "Em Abero" )</td>
+                    <td>@Venda.ValorTotal.Value.ToString("C")</td>
+                    <td>@(Venda.DataEntrega.HasValue ? Venda.DataEntrega : "Não Finalizada" )</td>
+                    <td>
+                        <a asp-action="Index" asp-controller="ItemVenda" asp-route-ved="@Venda.IdVenda"
+                           class="btn btn-sm btn-outline-primary">Itens</a>
+                        <a asp-action="Delete" asp-route-id="@Venda.IdVenda"
+                           class="btn btn-sm btn-outline-danger">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h2 class="text-danger">Sem registos de facturas efectuadas.</h2>
+    <h4 class="text-secondary text-md-end">Pode registar uma facturas clicando em <span class="text-dark">Nova Venda</span>.</h4>
+}
+

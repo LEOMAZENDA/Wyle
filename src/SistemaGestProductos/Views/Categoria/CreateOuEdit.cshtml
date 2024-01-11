@@ -1,0 +1,30 @@
+﻿@model Models.Entidades.Categoria
+
+@{
+    if (Context.Request.RouteValues.ContainsKey("id"))
+        ViewBag.Subtitulo = ("Alterando Categoria");
+    else
+        ViewBag.Subtitulo = ("Cadastrando nova Categoria");
+}
+
+<h3 class=" text-secondary">@ViewBag.Subtitulo</h3>
+
+
+<form asp-action="CreateOuEdit" class="row">
+    <input type="hidden" asp-for="@Model.Id" />
+    <div class=" row form-group col-sm-8 col-lg-4  p-2">
+        <input asp-for="@Model.Nome" class="form-control" autofocus placeholder="Digita o nome da categoria." />
+        <span asp-validation-for="@Model.Nome" class="text-danger"></span>
+    </div>
+    <div class="w-100"></div>
+    <br />
+
+    <div class="mt-3">
+        <button class="btn btn-success" type="submit" asp-action="CreateOuEdit">Guardar</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+
+@section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

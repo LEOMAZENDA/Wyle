@@ -1,0 +1,94 @@
+﻿@model IEnumerable<ItemVenda>
+@{
+    var venda = ViewBag.Venda as Venda;
+    ViewBag.Subtitulo = $"Venda nº: <b>{venda.IdVenda:D4}<b/>";
+}
+
+<header class="d-flex justify-content-between align-items-center"  >
+    <div>
+        <h1 class="text-primary">
+            @Html.Raw(ViewBag.Subtitulo)
+            @(venda.DataVenda.HasValue ? "(Fechado)" : "")
+        </h1>
+    </div>
+    @if (!venda.DataVenda.HasValue)
+    {
+        <div>
+         <a asp-action="CreateOuEdit" asp-route-ved="@venda.IdVenda" class="btn btn-outline-primary ">Novo Item</a>
+        </div>
+    }
+</header>
+<h4>Cliente: <b>@venda.Cliente.Nome</b></h4>
+<hr />
+
+@if (venda.DataEntrega.HasValue)
+{
+    <h6>Endereço da entrega: @venda.EnderecoEntrega.EnderecoComplecto</h6>
+    <hr />
+}
+<partial name="_Mensagem" />
+
+@if (Model.Count() > 0)
+{
+    <table class="table table-striped table-hover tabela-itens">
+        <thead class="table-dark">
+            <tr>
+                <th>PRODUCTO</th>
+                <th>VALOR UNITÁRIOO</th>
+                <th>QUANT.</th>
+                <th>VALOR ITEM</th>
+                <th>OPERADOR</th>
+                @if (!venda.DataVenda.HasValue)
+                {
+                    <th>ACCÇÕES</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ItemVenda in Model)
+            {
+                <tr>
+                    <td>@ItemVenda.Producto.Nome</td>
+                    <td>@ItemVenda.ValorUnitario.ToString("C")</td>
+                    <td>@ItemVenda.Quantidade</td>
+                    <td>@ItemVenda.ValorItem.ToString("C")</td>
+                    <td>@ItemVenda.Venda.Operador</td>
+
+                    @if (!venda.DataVenda.HasValue)
+                    {
+                        <td>
+                            <a asp-action="CreateOuEdit"  asp-route-id="@ItemVenda.IdVenda @ItemVenda.IdProducto"
+                               class="btn btn-outline-warning badge">Alterar</a>
+                            <a asp-action="Delete" asp-route-id="@ItemVenda.IdVenda @ItemVenda.IdProducto"
+                               class="btn btn-outline-danger badge">Excluir</a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-end"><b>Valor Total da Venda:</b></td>
+                <td><b>@Model.Sum(i => i.ValorItem).ToString("C")</b></td>
+                @if (!venda.DataVenda.HasValue)
+                { <td></td>}
+            </tr>
+        </tfoot>
+    </table>
+}
+else
+{
+<h4 class="text-danger">@venda.Cliente.Nome já tem uma venda em aberto. Porém, sem itens.</h4>
+    <h5 class="text-dark text-md-end">Pode adcionar productos em <span class="text-secondary"><b>Novo Itens</b></span>.</h5>
+    <hr />
+}
+
+<div class="d-flex justify-content-end align-items-center gap-2">
+    <a asp-action="Index" asp-controller="Venda" asp-route-cid="@venda.IdCliente"
+       class="btn btn-outline-warning">Voltar</a>
+    @if (!venda.DataVenda.HasValue && venda.ItensVenda.Count() > 0)
+     {
+        <a asp-action="Fechar" asp-controller="Venda" asp-route-id="@venda.IdVenda"
+           class="btn btn-success">Fechar Venda </a>
+     }
+</div>

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Models.Entidades.Cliente>
+
+@{
+    ViewBag.Subtitulo = "Clientes";
+}
+
+<div class="row">
+<div class="col col-12"></div>
+    <header class="row align-items-center">
+        <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom">
+            <h2 class="text-secondary">Todos os @ViewBag.Subtitulo</h2>
+            <div class="col-auto d-flex">
+                <a type="button" asp-action="CreateOuEdit" class="btn btn-outline-primary "> <i class="icofont-plus-circle me-2 fs-6"></i>Novo Cliente</a>
+            </div>
+        </div>
+    </header>
+    <hr />
+</div>
+<partial name="_Mensagem" />
+
+<div class="row">
+    <div class="col col-12">
+
+        @if (Model.Count() > 0)
+        {
+            <table class="table table-responsive table-striped table-hover tabela-categorias">
+                <thead class="table-dark">
+                    <tr>
+                        <th>NOME COMPLECTO</th>
+                        <th>TELEFONE</th>
+                        <th>E-MAIL</th>
+                        <th>DATA CADASTRO</th>
+                        <th>ACÇÕES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var cliente in Model)
+                    {
+                        <tr>
+                            <td>@cliente.Nome</td>
+                            <td>@cliente.TelefoneNº</td>
+                            <td>@cliente.Email</td>
+                            <td>@cliente.DataRegisto</td>
+
+                            <td>
+                                <a asp-controller="Venda" asp-action="Index" asp-route-cid="@cliente.Id" class="btn btn-outline-success badge">FACTURAS</a>
+                                <a asp-controller="Endereco" asp-action="Index" asp-route-cid="@cliente.Id" class="btn btn-sm btn-outline-info badge">MORADA</a>
+                                <a asp-action="CreateOuEdit" asp-route-id="@cliente.Id" class="btn btn-sm btn-outline-warning badge">ALTERAR</a>
+                                <a asp-action="Delete" asp-route-id="@cliente.Id" class="btn btn-sm btn-outline-danger badge">EXCLUIR</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <h4 class="text-danger">Sem registos de momento.</h4>
+            <h5 class="text-dark text-md-end">Pode efectuar um registo em <span class="text-secondary">Novo Cliente</span>.</h5>
+        }
+
+    </div>
+</div>
